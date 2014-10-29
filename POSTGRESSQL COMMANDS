@@ -1,0 +1,36 @@
+POSTGRESSQL COMMANDS
+
+CREATE A NEW USER IN POSTGRES
+
+postgresql: sudo -i -u postgres
+postgresql: createuser -P -l username
+
+LOGIN INTO SPECIF DATABASE
+psql testdb
+
+SHOW USERS / ROLES
+postgresql: \du
+postgresql: select * from pg_shadow;
+postgresql: select rolname from pg_roles;
+
+mysql: SHOW TABLES
+postgresql: \d
+postgresql: \dt
+postgresql: SELECT table_name FROM information_schema.tables WHERE table_schema = 'public';
+
+mysql: SHOW DATABASES
+postgresql: \l
+postgresql: \list 
+postgresql: SELECT datname FROM pg_database;
+
+mysql: SHOW COLUMNS
+postgresql: \d table
+postgresql: SELECT column_name FROM information_schema.columns WHERE table_name ='table';
+
+mysql: DESCRIBE TABLE
+postgresql: \d+ table
+postgresql: SELECT column_name FROM information_schema.columns WHERE table_name ='table'
+
+
+postgress user administration
+http://www.davidpashley.com/articles/postgresql-user-administration/

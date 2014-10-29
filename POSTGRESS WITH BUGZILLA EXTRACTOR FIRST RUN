@@ -1,0 +1,34 @@
+POSTGRESS WITH BUGZILLA EXTRACTOR FIRST RUN
+
+01 - INSTALL POSTGRESSQL 
+
+02 - ACCESS WITH DEFAULT ROOT USER :
+sudo -u -i postgres
+
+03 - CREATE ROLE , USER AND DATABASE TO BE ACESSED
+man createuser
+createuser --interactive -P
+createdb DATA_BASE_NAME
+
+04 - EXIT AND LOGIN AGAIN TO THE NEW DATABASE
+
+ psql DATA_BASE
+
+05 - CREATE TABLE HTTPDBUGS
+
+CREATE TABLE httpdbugs (
+  bug_id int  NOT NULL,
+  product VARCHAR(40) NOT NULL,
+  component VARCHAR(40) NOT NULL,
+  status varchar(20) NOT NULL,
+  assignee varchar(50),
+  resolution varchar(40) NOT NULL,
+  summary varchar(200) NOT NULL,
+  reported TIMESTAMP,
+  closed TIMESTAMP,  
+  PRIMARY KEY  (bug_id)
+)
+
+06 - GRANT ACESS TO THE USER TO THE NEW TABLE
+
+GRANT ALL ON TABLE_NAME TO USER_NAME
