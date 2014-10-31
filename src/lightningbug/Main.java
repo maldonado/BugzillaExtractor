@@ -97,14 +97,14 @@ public class Main {
         Statement st = m.getConn().createStatement();
         System.out.println("searching bugzilla...");
         Map bugSearch = new HashMap();
-        Object[] products = {"Platform"};
+//        Object[] products = {"Platform"};
         //Object[] components = {"All", "Build", "Core"}; //list all component. ommit to include all components
-        Object[] status = {"CLOSED"};
-        Object[] resolutions = {"FIXED"};
-        bugSearch.put("product", products);
+//        Object[] status = {"CLOSED"};
+        Object[] id = {"49380","211447","43952","122442","264238","112774","48131","298510","81140","49383","55435","357547","183463","209706","311582","123375","102780","371233","34548","252677","259687","311617","57455","402028","153500","209872","48141","61553","317706","360044","212389","318759","209872","350103","24344","401030","40255","209836","61270","109878","180921","213297","72566","264238","53565","243441","250794","227043"};
+//        bugSearch.put("product", products);
         //bugSearch.put("component", components);  //comment this line to include all component
-        bugSearch.put("status", status);
-        bugSearch.put("resolution", resolutions);
+//        bugSearch.put("status", status);
+        bugSearch.put("id", id);
       
         m.bugList = m.searchBugs(bugSearch);
         List<Integer> idList = new ArrayList();
@@ -120,8 +120,8 @@ public class Main {
         bugMap.put("ids", ids);
         System.out.println("processing bugs...");
 //        m.processHistory(bugMap);
-        String sql = "INSERT INTO httpdbugs (bug_id, product, component, status, resolution, reported, closed, summary, assignee) "
-                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
+        String sql = "INSERT INTO httpdbugs (bug_id, product, component, status, resolution, reported, closed, summary, assignee, lastChangeTime) "
+                + "VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
         PreparedStatement ps = m.getConn().prepareStatement(sql);
         System.out.println("building batch update statment...");
         
@@ -135,6 +135,7 @@ public class Main {
             ps.setTimestamp(7, mb.getClosed());
             ps.setString(8, mb.getSummary());
             ps.setString(9, mb.getAssignee());
+            ps.setTimestamp(10, mb.getLastChangeTime());
             ps.addBatch();
         }
 
@@ -159,6 +160,7 @@ public class Main {
             String resolution = (String) bug.get("resolution");
             String status = (String) bug.get("status");
             Long reportedlt = ((java.util.Date) bug.get("creation_time")).getTime();
+            Long lastChangeTime = ((java.util.Date) bug.get("last_change_time")).getTime();
             String summary = (String)bug.get("summary");
             String assignee = (String)bug.get("assigned_to");
 
@@ -170,6 +172,7 @@ public class Main {
             myBug.setId(bugId);
             myBug.setAssignee(assignee);
             myBug.setSummary(summary);
+            myBug.setLastChangeTime(new Timestamp(lastChangeTime));
             myBugList.add(myBug);
         }
 
@@ -226,8 +229,6 @@ public class Main {
                 }
 
             }
-
-
         }
         if (closed) {
             //to handle for cases where a bug is reopened.

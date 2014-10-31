@@ -17,17 +17,18 @@ createdb DATA_BASE_NAME
 05 - CREATE TABLE HTTPDBUGS
 
 CREATE TABLE httpdbugs (
-  bug_id int  NOT NULL,
+  bugid int  NOT NULL,
+  status varchar(20) NOT NULL,
+  resolution varchar(50) NOT NULL,
+  summary varchar(500) NOT NULL,
+  creationdate TIMESTAMP,
+  commitedDate TIMESTAMP,
+  resolvedDate TIMESTAMP,
   product VARCHAR(40) NOT NULL,
   component VARCHAR(40) NOT NULL,
-  status varchar(20) NOT NULL,
   assignee varchar(50),
-  resolution varchar(40) NOT NULL,
-  summary varchar(200) NOT NULL,
-  reported TIMESTAMP,
-  closed TIMESTAMP,  
   PRIMARY KEY  (bug_id)
-)
+);
 
 06 - GRANT ACESS TO THE USER TO THE NEW TABLE
 

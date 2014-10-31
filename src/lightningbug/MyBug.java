@@ -21,6 +21,7 @@ public class MyBug {
     private String assignee;
     private Timestamp reported;
     private Timestamp closed;
+	private Timestamp lastChangeTime;
 
     public Integer getId() {
         return id;
@@ -110,4 +111,12 @@ public class MyBug {
         }
         return false;        
     }
+
+	public void setLastChangeTime(Timestamp lastChangeTime) {
+		this.lastChangeTime = lastChangeTime;
+	}
+
+	public Timestamp getLastChangeTime() {
+		return this.lastChangeTime;
+	}
 }
